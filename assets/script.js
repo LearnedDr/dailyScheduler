@@ -25,12 +25,6 @@ $(function () {
 });
 
 
-// GIVEN I am using a daily planner to create a schedule
-// WHEN I open the planner
-// THEN the current day is displayed at the top of the calendar
-
-
-
 function liveClock() {
 
   var today = dayjs();
@@ -42,17 +36,6 @@ setInterval(liveClock, 1000)
 var currentHour = dayjs().hour();
 
 
-
-
-
-
-// WHEN I scroll down
-// THEN I am presented with timeblocks for standard business hours
-
-
-// WHEN I view the timeblocks for that day
-// THEN each timeblock is color coded to indicate whether it is in the past, present, or future
-
 var textAreaAll = document.querySelectorAll(".description");
 
 var textAreaEl = $(".description");
@@ -63,19 +46,17 @@ var textAreaEl = $(".description");
 function changeColor() {
   for (var i = 0; i < textAreaAll.length; i++) {
 
-  // change first if to > currentHour
-  // change second if to == currentHour
-  // change third if to < currentHour
   if (Number(textAreaAll[i].id) < currentHour) {
     textAreaAll[i].classList.remove("past", "present", "future");
     textAreaAll[i].classList.add("past")
+    // console.log("it is" + i + "oclock")
   }
-  else if (textAreaAll[i].id == 10) {
+  else if (Number(textAreaAll[i].id) === currentHour) {
     textAreaAll[i].classList.remove("past", "present", "future");
     textAreaAll[i].classList.add("present");
     console.log("it is" + i + "oclock")
   }
-  else if (textAreaAll[i].id == 11) {
+  else if (Number(textAreaAll[i].id) > currentHour) {
     textAreaAll[i].classList.remove("past", "present", "future");
     textAreaAll[i].classList.add("future")
   };
@@ -86,11 +67,9 @@ changeColor();
 setInterval(changeColor, 60000);
 
 // ********NEW STUFF*************
-// 1.  classList.remove to not only add
+
 // 2.  figured out jquery to find id
-// 3.  wrapped it in a function to call it again every minute to change colors dynamically
-// 4.  Number(textAreaAll[i]).id to turn string into number (notice ===)
-// 5.  added running clock
+
 
 // var textAreaEl = $(".description");
 
@@ -100,9 +79,6 @@ setInterval(changeColor, 60000);
 // $(function changeColor() {
 //   for (var i = 0; i < textAreaEl.length; i++) {
 
-//   // change first if to > currentHour
-//   // change second if to == currentHour
-//   // change third if to < currentHour
 //   if (Number(textAreaEl[i].attr('id')) < currentHour) {
 //     textAreaEl[i].removeClass("past", "present", "future");
 //     textAreaEl[i].addClass("past")
@@ -122,22 +98,10 @@ setInterval(changeColor, 60000);
 // changeColor();
 // setInterval(changeColor, 60000);
 // });
-// WHEN I click into a timeblock
-// THEN I can enter an event
-
-
-// WHEN I click the save button for that timeblock
-// THEN the text for that event is saved in local storage
-
-
-// WHEN I refresh the page
-// THEN the saved events persist
-
-
-
 
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// ******attempt 1 at local storage************
 
 // var entireSchedule = [hourNine, "hello", "goodbye"];
 // var buttonNineEl = $("#btn-9");
@@ -189,25 +153,73 @@ setInterval(changeColor, 60000);
 
 // **********attempt 3.0**************
 
-var buttonsAll = $(".saveBtn")
-// var buttonsAll = document.querySelectorAll('.saveBtn');
-var workHours = 8
-// set a global empty object that we fill in dynamically
-var savedSchedule = {};    
-    buttonsAll.on("click", function(event) {
-    // buttonsAll.addEventListener('click', function (event) {  
-        event.preventDefault();
-        var buttonId = this.id;
-        var textEntry = this.previousElementSibling.value;
-        // buttonId : textEntry
-        savedSchedule["hour"+buttonId] = textEntry;
-        savedSchedule["HAHAHAHAHAH"] = "nothing";
-        console.log("Hello")
-        localStorage.setItem("localSchedule", JSON.stringify(savedSchedule))
+// var buttonsAll = $(".saveBtn")
+      
+// // var buttonsAll = document.querySelectorAll('.saveBtn');
+// var workHours = 8
+// // set a global empty object that we fill in dynamically
+// var savedSchedule = {};    
+//     buttonsAll.on("click", function(event) {
+//     // buttonsAll.addEventListener('click', function (event) {  
+//         event.preventDefault();
+//         var buttonId = this.id;
+//         var textEntry = this.previousElementSibling.value;
+//         // buttonId : textEntry
+//         savedSchedule["hour"+buttonId] = textEntry;
+//         savedSchedule["HAHAHAHAHAH"] = "nothing";
+//         console.log("Hello")
+//         localStorage.setItem("localSchedule", JSON.stringify(savedSchedule))
         
-    });
+//     });
 
-var newItem = getItem(JSON.parse("localStorage"))
+// var newItem = getItem(JSON.parse("localSchedule"));
+
+
+// 1. grab the buttons in a variable
+// 2. for loop the buttons to make 9 separate local storage objects
+
+// ************attempt 4***********************
+
+var buttonsAll = $(".saveBtn")
+
+for (var i = 0; i < textAreaAll.length; i++) {
+  
+  buttonsAll.on("click", function(event) {
+      event.preventDefault();
+      var buttonId = this.id;
+      var textEntry = this.previousElementSibling.value;
+      savedHour = textEntry;
+      localStorage.setItem(buttonId, JSON.stringify(savedHour));
+  });
+};
+var retrieveNine = JSON.parse(window.localStorage.getItem("9am"));
+textAreaAll[0].textContent = retrieveNine
+
+var retrieveTen = JSON.parse(window.localStorage.getItem("10am"));
+textAreaAll[1].textContent = retrieveTen
+
+var retrieveEleven = JSON.parse(window.localStorage.getItem("11am"));
+textAreaAll[2].textContent = retrieveEleven
+
+var retrieveTwelve = JSON.parse(window.localStorage.getItem("12pm"));
+textAreaAll[3].textContent = retrieveTwelve
+
+var retrieveOne = JSON.parse(window.localStorage.getItem("1pm"));
+textAreaAll[4].textContent = retrieveOne
+
+var retrieveTwo = JSON.parse(window.localStorage.getItem("2pm"));
+textAreaAll[5].textContent = retrieveTwo
+
+var retrieveThree = JSON.parse(window.localStorage.getItem("3pm"));
+textAreaAll[6].textContent = retrieveThree
+
+var retrieveFour = JSON.parse(window.localStorage.getItem("4pm"));
+textAreaAll[7].textContent = retrieveFour
+
+var retrieveFive = JSON.parse(window.localStorage.getItem("5pm"));
+textAreaAll[8].textContent = retrieveFive
+
+
 
 //****************** * make a for loop that loops through newItem and textAreaAll******************
 

@@ -186,39 +186,51 @@ for (var i = 0; i < textAreaAll.length; i++) {
   
   buttonsAll.on("click", function(event) {
       event.preventDefault();
-      var buttonId = this.id;
-      var textEntry = this.previousElementSibling.value;
-      savedHour = textEntry;
-      localStorage.setItem(buttonId, JSON.stringify(savedHour));
+      var buttonId = $(this).attr("id");
+      var textEntry = $(this).prev().val();
+      savedHour = textEntry
+      localStorage.setItem(buttonId, savedHour);
   });
+   // var buttonId = this.id;
+      // var textEntry = this.previousElementSibling.value;
+      // savedHour = textEntry;
+      // localStorage.setItem(buttonId, savedHour);
+      // in vanilla
 };
-var retrieveNine = JSON.parse(window.localStorage.getItem("9am"));
-textAreaAll[0].textContent = retrieveNine
 
-var retrieveTen = JSON.parse(window.localStorage.getItem("10am"));
-textAreaAll[1].textContent = retrieveTen
+// var retrieveNine = JSON.parse(window.localStorage.getItem("9am"));
+// textAreaAll[0].textContent = retrieveNine
 
-var retrieveEleven = JSON.parse(window.localStorage.getItem("11am"));
-textAreaAll[2].textContent = retrieveEleven
+// var retrieveTen = JSON.parse(window.localStorage.getItem("10am"));
+// textAreaAll[1].textContent = retrieveTen
 
-var retrieveTwelve = JSON.parse(window.localStorage.getItem("12pm"));
-textAreaAll[3].textContent = retrieveTwelve
+// var retrieveEleven = JSON.parse(window.localStorage.getItem("11am"));
+// textAreaAll[2].textContent = retrieveEleven
 
-var retrieveOne = JSON.parse(window.localStorage.getItem("1pm"));
-textAreaAll[4].textContent = retrieveOne
+// var retrieveTwelve = JSON.parse(window.localStorage.getItem("12pm"));
+// textAreaAll[3].textContent = retrieveTwelve
 
-var retrieveTwo = JSON.parse(window.localStorage.getItem("2pm"));
-textAreaAll[5].textContent = retrieveTwo
+// var retrieveOne = JSON.parse(window.localStorage.getItem("1pm"));
+// textAreaAll[4].textContent = retrieveOne
 
-var retrieveThree = JSON.parse(window.localStorage.getItem("3pm"));
-textAreaAll[6].textContent = retrieveThree
+// var retrieveTwo = JSON.parse(window.localStorage.getItem("2pm"));
+// textAreaAll[5].textContent = retrieveTwo
 
-var retrieveFour = JSON.parse(window.localStorage.getItem("4pm"));
-textAreaAll[7].textContent = retrieveFour
+// var retrieveThree = JSON.parse(window.localStorage.getItem("3pm"));
+// textAreaAll[6].textContent = retrieveThree
 
-var retrieveFive = JSON.parse(window.localStorage.getItem("5pm"));
-textAreaAll[8].textContent = retrieveFive
+// var retrieveFour = JSON.parse(window.localStorage.getItem("4pm"));
+// textAreaAll[7].textContent = retrieveFour
 
+// var retrieveFive = JSON.parse(window.localStorage.getItem("5pm"));
+// textAreaAll[8].textContent = retrieveFive
+
+var textAreaEl = $(".description");
+textAreaEl.each(function(){  
+  $(this).text(localStorage.getItem(($(this).next()).attr("id")));
+});
+// textAreaAll.forEach(textAreaAll.textContent => localStorage.getItem(textAreaAll.nextElementSibling.id));
+  // } in vanilla except textAreaAll.textContent is not correctly syntaxed
 
 
 //****************** * make a for loop that loops through newItem and textAreaAll******************

@@ -14,9 +14,8 @@ No installation required
 MIT
 
 ## Features
-Local storage crap
+Local Storage holds current day's schedule that persists through refresh
 
 ## Usage
-link
-github repo link
-screenshots
+https://learneddr.github.io/dailyScheduler/
+https://github.com/LearnedDr/dailyScheduler
